@@ -305,24 +305,29 @@ spec:
       <div class="dash" data-component="dash">
         <div class="dash-frame">
           <picture class="dash-img" data-active="true">
-            <source media="(max-width: 720px)" srcset="/screenshots/dashboard/apps-mobile.png" />
-            <img loading="lazy" src="/screenshots/dashboard/apps.png" alt="Apps — multi-env spread, version timelines, failing apps surfaced" />
+            <source media="(max-width: 720px)" srcset="/screenshots/dashboard/home-mobile.png" />
+            <img loading="lazy" src="/screenshots/dashboard/home.png" alt="Home — held and steady rollouts, your changes, how it is going" />
+          </picture>
+          <picture class="dash-img">
+            <source media="(max-width: 720px)" srcset="/screenshots/dashboard/changes-mobile.png" />
+            <img loading="lazy" src="/screenshots/dashboard/changes.png" alt="Changes — your merged changes with a per-environment meter, one card per repository" />
+          </picture>
+          <picture class="dash-img">
+            <source media="(max-width: 720px)" srcset="/screenshots/dashboard/change-mobile.png" />
+            <img loading="lazy" src="/screenshots/dashboard/change.png" alt="A change — what holds it, what unblocks it, every rollout that would get it" />
           </picture>
           <picture class="dash-img">
             <source media="(max-width: 720px)" srcset="/screenshots/dashboard/overview-mobile.png" />
             <img loading="lazy" src="/screenshots/dashboard/overview.png" alt="Rollout overview — deployment pipeline, health checks, resources" />
           </picture>
-          <picture class="dash-img">
-            <source media="(max-width: 720px)" srcset="/screenshots/dashboard/activity-mobile.png" />
-            <img loading="lazy" src="/screenshots/dashboard/activity.png" alt="Activity — deployment timeline grouped by recency, failures highlighted" />
-          </picture>
         </div>
 
 
         <div class="dash-carouseldots">
-          <button type="button" data-active="true">01 · Apps</button>
-          <button type="button">02 · Overview</button>
-          <button type="button">03 · Activity</button>
+          <button type="button" data-active="true">01 · Home</button>
+          <button type="button">02 · Changes</button>
+          <button type="button">03 · Change</button>
+          <button type="button">04 · Overview</button>
         </div>
       </div>
     </div>

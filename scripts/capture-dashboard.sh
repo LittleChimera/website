@@ -43,9 +43,16 @@ mkdir -p "$OUT_DIR"
 #   - overview: deployment pipeline, health checks, resources (drilled in)
 #   - activity: deployment timeline grouped by recency, with failures
 # Adding more? Keep the count small; the landing rotates them.
+# The changes pages read GitHub as the viewing user; the mock API has no
+# /api/github, so capture those against a live dashboard with
+# GITHUB_DEV_TOKEN set (URL_BASE=https://127.0.0.1:5173) — see
+# rollout-dashboard/frontend/README.md. The 2026-09-11 set was captured live.
 ROUTES=(
+  "|home"
+  "changes|changes"
+  "changes/github.com/littlechimera/kuberik-testing/pull/4|change"
   "apps|apps"
-  "rollouts/default/hello-world|overview"
+  "rollouts/dev/hello-dep-dev/hello-frontend-app|overview"
   "activity|activity"
 )
 
