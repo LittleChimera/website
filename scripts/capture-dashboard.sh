@@ -53,8 +53,13 @@ ROUTES=(
   "changes/github.com/littlechimera/kuberik-testing/pull/4|change"
   "apps|apps"
   "rollouts/dev/hello-dep-dev/hello-frontend-app|overview"
+  "rollouts/dev/hello-multi-dev/hello-multi-app/history|history"
   "activity|activity"
 )
+# Richer shots: run scripts/build-and-push.sh in rollout-dashboard first and
+# capture while rollouts are deploying/checking (Home's "In motion" section,
+# blue/yellow meters on Changes, "deploying" rows in History). The history
+# shot wants the newest deploy expanded to show its commit changelist.
 
 started_mock=0
 if ! curl -sk -o /dev/null --max-time 2 "$URL_BASE/api/rollouts/default/hello-world"; then

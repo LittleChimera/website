@@ -74,6 +74,8 @@ The Rollout Dashboard can show what a deploy changes — the commits and diffsta
 
 This is independent of the token above: the Environment backend uses a PAT per namespace; the dashboard uses app credentials, hub cluster only.
 
+Since v0.9 the same sign-in powers **Changes** (`/changes`): every merged pull request and commit across the repositories the cluster deploys, where each one stands per service and environment, and the check-run results on its merge commit. Paste a PR link into `⌘K` to open its change.
+
 {{% steps %}}
 
 ### Create a GitHub App
