@@ -165,6 +165,15 @@ kubectl get crd -o name | grep -E 'kuberik\.com$' | xargs -I{} kubectl annotate 
 
 Use your own release name and namespace. Helm 3.17+ can do the same with `helm upgrade --take-ownership`.
 
+**Staying on ≤ 0.6.1.** New CRDs must still be applied by hand. Chart 0.6.x runs rollout-controller v0.9, which needs `RolloutDependency`; without it the controller does not start:
+
+```bash
+helm pull kuberik/kuberik --version <version> --untar
+kubectl apply --server-side -f kuberik/crds/
+```
+
+`--server-side` is required: the `RolloutTest` CRD is larger than the 256 KiB annotation limit of client-side `kubectl apply`.
+
 ## Uninstall
 
 ```bash
@@ -177,6 +186,7 @@ CRDs (annotated `helm.sh/resource-policy: keep`) and the `auth-system` namespace
 kubectl delete crd \
   rollouts.kuberik.com rolloutgates.kuberik.com healthchecks.kuberik.com \
   rolloutschedules.kuberik.com clusterrolloutschedules.kuberik.com \
+  rolloutdependencies.kuberik.com \
   rollouttests.rollout.kuberik.com environments.environments.kuberik.com
 kubectl delete namespace auth-system
 ```
