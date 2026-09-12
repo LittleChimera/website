@@ -22,7 +22,7 @@ Canary rollouts require the [OpenKruise Controller](/docs/installation/#openkrui
 Follow the [OpenKruise installation guide](https://openkruise.io/docs/installation) or use the Kuberik-managed installation:
 
 ```bash
-kubectl apply -f https://github.com/kuberik/openkruise-controller/releases/download/v0.3.3/install.yaml
+kubectl apply --server-side -f https://github.com/kuberik/openkruise-controller/releases/download/v0.3.3/install.yaml
 ```
 
 {{% /details %}}

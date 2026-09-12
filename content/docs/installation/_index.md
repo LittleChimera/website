@@ -64,7 +64,7 @@ These controllers are **optional** and add specific functionality. Install only 
 Enables canary deployments and advanced traffic shifting.
 
 ```bash
-kubectl apply -f https://github.com/kuberik/openkruise-controller/releases/download/v0.3.3/install.yaml
+kubectl apply --server-side -f https://github.com/kuberik/openkruise-controller/releases/download/v0.3.3/install.yaml
 ```
 
 {{< badge content="Canary Deployments" >}} {{< badge content="Traffic Shifting" >}}

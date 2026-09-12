@@ -156,7 +156,14 @@ helm upgrade kuberik oci://ghcr.io/kuberik/charts/kuberik \
   --namespace kuberik-system -f values.yaml
 ```
 
-CRDs are installed once and are not upgraded by Helm. Pull the new versions from the chart's `crds/` directory before upgrading if a release changes them.
+Since chart 0.7.0 the CRDs are chart resources, so `helm upgrade` installs new CRDs and updates existing ones. Coming from a chart ≤ 0.6.1, hand the existing CRDs over to the release once first, otherwise Helm refuses with `invalid ownership metadata`:
+
+```bash {filename="adopt-crds.sh"}
+kubectl get crd -o name | grep -E 'kuberik\.com$' | xargs -I{} kubectl label --overwrite {} app.kubernetes.io/managed-by=Helm
+kubectl get crd -o name | grep -E 'kuberik\.com$' | xargs -I{} kubectl annotate --overwrite {} meta.helm.sh/release-name=kuberik meta.helm.sh/release-namespace=kuberik-system
+```
+
+Use your own release name and namespace. Helm 3.17+ can do the same with `helm upgrade --take-ownership`.
 
 ## Uninstall
 
@@ -164,7 +171,7 @@ CRDs are installed once and are not upgraded by Helm. Pull the new versions from
 helm uninstall kuberik -n kuberik-system
 ```
 
-CRDs and the `auth-system` namespace are not removed. Drop them manually:
+CRDs (annotated `helm.sh/resource-policy: keep`) and the `auth-system` namespace are not removed. Drop them manually:
 
 ```bash
 kubectl delete crd \
