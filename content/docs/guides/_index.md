@@ -25,6 +25,7 @@ Step-by-step guides for common Kuberik workflows.
 
 {{< cards >}}
   {{< card title="Automated Promotion" link="cross-environment-rollout/" icon="switch-horizontal" subtitle="Staging → Production pipelines" >}}
+  {{< card title="Service Dependencies" link="service-dependencies/" icon="share" subtitle="Hold a service until the one it needs has shipped" >}}
   {{< card title="Canary Rollouts" link="canary-rollouts/" icon="chart-bar" subtitle="Progressive delivery with OpenKruise" >}}
 {{< /cards >}}
 
