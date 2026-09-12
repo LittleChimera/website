@@ -114,6 +114,8 @@ Configure kube-apiserver to trust the same client id so the id_token works as a 
 
 The dashboard aggregates rollouts across clusters automatically when `Environment` objects carry `status.environmentInfos[].environmentUrl` entries pointing at other dashboards. No configuration is required for this zero-config discovery path.
 
+![The Apps page: every app across clusters with the version running in each environment](/screenshots/dashboard/apps.png)
+
 Set `dashboard.url` and `dashboard.clusterName` to help the dashboard identify itself behind reverse proxies that don't forward `Host` headers — used for self-exclusion during fan-out and for the cluster display name in the hub UI:
 
 ```yaml {filename="values.yaml"}

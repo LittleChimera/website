@@ -132,6 +132,8 @@ The secret must contain a GitHub token with `deployments` write scope (`repo:dep
 
 Since Kuberik syncs state to external backends, you can view deployment history in your backend provider's UI.
 
+![The Environments page: every environment with what is running, what is held and which environment has to deploy first](/screenshots/dashboard/environments.png)
+
 For GitHub:
 1. Navigate to your repository
 2. Click **Environments** in the sidebar

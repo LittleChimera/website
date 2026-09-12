@@ -199,6 +199,8 @@ Point Flux at the source Kuberik will drive.
 
 Check that Kuberik detected the new version and created a release.
 
+![The rollout in the dashboard: the running build, the deployment pipeline, health checks and the resources it manages](/screenshots/dashboard/overview.png)
+
 ```bash
 kubectl describe rollout -n hello-world hello-world-app
 ```

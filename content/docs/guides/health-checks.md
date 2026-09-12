@@ -45,6 +45,8 @@ spec:
 
 Kuberik continuously evaluates all matching health checks. Bake time starts once all checks become healthy.
 
+![Health checks on the rollout page: each check with its state, next to the deployment pipeline it gates](/screenshots/dashboard/overview.png)
+
 {{% details title="Advanced: Cross-Namespace Selection" %}}
 
 Select health checks from other namespaces using `namespaceSelector`.

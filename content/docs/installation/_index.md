@@ -38,7 +38,7 @@ Kuberik relies on a resource reconciler to apply manifests to your cluster.
 Deploy the rollout controller:
 
 ```bash
-kubectl apply -f https://github.com/kuberik/rollout-controller/releases/download/v0.7.0/install.yaml
+kubectl apply --server-side -f https://github.com/kuberik/rollout-controller/releases/download/v0.7.0/install.yaml
 ```
 
 {{< callout type="default" >}}
@@ -78,7 +78,7 @@ See [FluxCD Integration](/docs/integrations/fluxcd/) for image automation setup.
 Uses Datadog monitors as health check sources during rollouts.
 
 ```bash
-kubectl apply -f https://github.com/kuberik/datadog-controller/releases/download/v0.1.0/install.yaml
+kubectl apply --server-side -f https://github.com/kuberik/datadog-controller/releases/download/v0.1.0/install.yaml
 ```
 
 {{< badge content="Health Checks" >}} {{< badge content="Monitoring" >}}
@@ -94,7 +94,7 @@ You'll need a Datadog API key configured. See [Datadog Integration](/docs/integr
 Coordinates multi-cluster promotions via GitHub Environments and Deployments APIs.
 
 ```bash
-kubectl apply -f https://github.com/kuberik/environment-controller/releases/download/v0.1.5/install.yaml
+kubectl apply --server-side -f https://github.com/kuberik/environment-controller/releases/download/v0.1.5/install.yaml
 ```
 
 {{< badge content="Multi-cluster" >}} {{< badge content="GitHub Integration" >}}

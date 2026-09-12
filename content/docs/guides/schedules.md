@@ -93,6 +93,8 @@ spec:
 | `gate.kuberik.com/pretty-name` | Display name shown in dashboard |
 | `gate.kuberik.com/description` | Description shown in dashboard |
 
+![A rollout held by a deploy window: the banner names the schedule, its hours and when automatic deploys resume](/screenshots/dashboard/held-schedule.png)
+
 ## Rule Options
 
 Each rule can combine:

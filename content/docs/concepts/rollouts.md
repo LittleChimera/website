@@ -67,6 +67,8 @@ spec:
 
 The Rollout's status shows the current state:
 
+![Rollout history in the dashboard: each deployment with the commits it shipped, who triggered it and how long it took](/screenshots/dashboard/history.png)
+
 ```bash
 kubectl get rollout my-app -o yaml
 ```
@@ -152,6 +154,8 @@ This prevents deployment storms and ensures each version gets proper verificatio
 ## Manual Deployments
 
 Deploy a specific version manually during an incident or for targeted recovery. Kuberik distinguishes these from automated rollouts.
+
+![The Change Version dialog: the commits the build ships, the rules it would override, a required note and a typed confirmation](/screenshots/dashboard/change-version.png)
 
 {{< callout type="important" >}}
 **Manual Deploys Are Not Auto-Reverted**

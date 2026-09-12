@@ -30,7 +30,9 @@ Pick one management method per gate. With Server-Side Apply (SSA), Flux only man
 
 {{< tabs >}}
   {{< tab name="Dashboard" >}}
-  Navigate to the Rollout in the Kuberik Dashboard and click **Approve** on the pending version.
+  Open the Rollout in the Kuberik Dashboard. Held builds are listed under **Newer builds**; the `HELD` chip names the gate that is waiting. Approve the gate through the CLI or Git so the build promotes on its own, or press **Deploy** on the build to ship it by hand. A hand deploy overrides the gate, applies immediately and records the note you type.
+
+  ![Held builds on a rollout: the chip explains that a manual approval is pending, and Deploy ships the build by hand](/screenshots/dashboard/held-approval.png)
   {{< /tab >}}
 
   {{< tab name="CLI" >}}

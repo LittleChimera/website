@@ -63,6 +63,8 @@ flowchart TB
 | **HealthCheck** | Probes system health during the bake period (HTTP, Datadog, Script). |
 | **RolloutGate** | Blocks a Rollout from proceeding until specific conditions (manual approval, API check) are met. |
 
+![One rollout in the dashboard: the running build, its deployment pipeline, the health checks it watches and the resources it manages](/screenshots/dashboard/overview.png)
+
 ## The Release Lifecycle
 
 {{% steps %}}

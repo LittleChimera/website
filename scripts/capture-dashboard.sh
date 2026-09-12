@@ -55,7 +55,13 @@ ROUTES=(
   "rollouts/dev/hello-dep-dev/hello-frontend-app|overview"
   "rollouts/dev/hello-multi-dev/hello-multi-app/history|history"
   "activity|activity"
+  "rollouts|rollouts"
+  "environments|environments"
+  "dependencies|dependencies"
+  "rollouts/dev/hello-dep-dev/hello-frontend-app/dependencies|rollout-dependencies"
 )
+# held-schedule, held-approval and change-version need a click first:
+# scripts/live-capture/dialogs.mjs against the live dashboard.
 # Richer shots: run scripts/build-and-push.sh in rollout-dashboard first and
 # capture while rollouts are deploying/checking (Home's "In motion" section,
 # blue/yellow meters on Changes, "deploying" rows in History). The history

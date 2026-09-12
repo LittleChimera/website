@@ -46,6 +46,8 @@ The release is marked as succeeded or failed.
 
 {{% /steps %}}
 
+![The dashboard home: what is deploying right now, what a rule is holding, and your merged changes with how far each one got](/screenshots/dashboard/home.png)
+
 For a detailed component breakdown, see [Architecture](/docs/concepts/architecture/).
 
 ## Next Steps

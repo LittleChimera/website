@@ -72,9 +72,13 @@ spec:
 
 The Rollout Dashboard can show what a deploy changes — the commits and diffstat between the running build and the one you are about to ship — in the Change Version dialog, on rollout detail and in Activity. It does this by signing each user in to GitHub through a **GitHub App**, so everyone sees only the repositories they can already read.
 
+![The Change Version dialog with the commits the build ships, read through the signed-in user's GitHub access](/screenshots/dashboard/change-version.png)
+
 This is independent of the token above: the Environment backend uses a PAT per namespace; the dashboard uses app credentials, hub cluster only.
 
 Since v0.9 the same sign-in powers **Changes** (`/changes`): every merged pull request and commit across the repositories the cluster deploys, where each one stands per service and environment, and the check-run results on its merge commit. Paste a PR link into `⌘K` to open its change.
+
+![The Changes page: every merged change, how far it got, and a card per repository](/screenshots/dashboard/changes.png)
 
 {{% steps %}}
 
