@@ -9,6 +9,10 @@ Track deployment history and rollout status using kube-state-metrics.
 
 Kuberik exposes rollout status through standard Kubernetes resource fields. Use [kube-state-metrics](https://github.com/kubernetes/kube-state-metrics) custom resource configuration to expose these fields as Prometheus metrics.
 
+The dashboard reads the same fields: its Activity page is the deployment feed across every cluster, and each rollout page shows the bake and health-check state the metrics below export.
+
+![The Activity page: every deployment across clusters, grouped by day, with failures called out](/screenshots/dashboard/activity.png)
+
 ---
 
 ## Configure kube-state-metrics

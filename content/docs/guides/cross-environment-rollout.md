@@ -49,7 +49,7 @@ spec:
 {{< callout >}}
 The controller automatically creates RolloutGate resources based on relationships. With `type: After`, only versions successfully baked in staging become available for production.
 
-![The Environments page shows the chain: a held rollout names the environment that deploys it first](/screenshots/dashboard/environments.png)
+![The promotion pipeline of one app: dev and staging on the newest build, production waiting on its gates](/screenshots/dashboard/app.png)
 {{< /callout >}}
 
 ## Relationship Types

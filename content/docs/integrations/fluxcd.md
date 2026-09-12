@@ -280,6 +280,8 @@ spec:
 
 This checks if the Kustomization's `Ready` condition is true.
 
+![The Kustomization health check beside the Flux resources the rollout manages, each with its current state](/screenshots/dashboard/overview-prod.png)
+
 ---
 
 {{% details title="Troubleshooting" %}}

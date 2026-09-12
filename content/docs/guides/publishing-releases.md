@@ -7,6 +7,8 @@ Kuberik orchestrates the delivery of your releases — but **you** decide when a
 
 This guide shows how to publish tagged container images that Kuberik can pick up automatically.
 
+![A published build in the dashboard: the newest tag, the repository it came from, and how far it has been promoted](/screenshots/dashboard/app.png)
+
 ## GitHub Workflow
 
 Build your Dockerfile, tag it, and push it to a registry (e.g., GHCR).

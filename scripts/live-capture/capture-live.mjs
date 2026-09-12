@@ -19,6 +19,9 @@ const ROUTES = [
   ['/rollouts', 'rollouts'], ['/environments', 'environments'],
   ['/dependencies', 'dependencies'],
   ['/rollouts/dev/hello-dep-dev/hello-frontend-app/dependencies', 'rollout-dependencies'],
+  ['/rollouts/prod/hello-world-prod/hello-world-app', 'overview-prod'],
+  ['/apps/hello-world-app', 'app'],
+  ['/rollouts/prod/hello-world-prod/hello-world-manifests', 'overview-manifests'],
 ];
 // ONLY=name,name limits the capture to those route names.
 const only = (process.env.ONLY || '').split(',').filter(Boolean);

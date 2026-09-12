@@ -66,6 +66,8 @@ See the [OpenKruise Rollout documentation](https://openkruise.io/docs/rollouts/u
 
 Use `RolloutTest` to run a Job at a specific canary step. Kuberik pauses the rollout at that step, runs the Job, and proceeds only if it succeeds. If the test fails, the rollout stays paused for investigation or rollback.
 
+![A stepped rollout in the dashboard: each canary step is a stage of the deployment pipeline, and the final check watches the health checks before the deploy counts as done](/screenshots/dashboard/overview-prod.png)
+
 ```yaml {filename="smoke-test.yaml"}
 apiVersion: rollout.kuberik.com/v1alpha1
 kind: RolloutTest

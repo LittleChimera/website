@@ -111,6 +111,8 @@ During bake time:
 4. If any monitor is in `Alert` state → rollout fails
 5. If all monitors are `OK` → rollout proceeds
 
+![DatadogMonitors as health checks on the rollout page, with the APM service linked next to them](/screenshots/dashboard/overview-prod.png)
+
 ---
 
 ## Monitor Types

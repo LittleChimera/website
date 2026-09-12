@@ -106,6 +106,8 @@ metadata:
     gate.kuberik.com/description: "Explanation for operators"
 ```
 
+![How the dashboard shows them: the pretty name and description of each gate holding a build](/screenshots/dashboard/held-approval.png)
+
 ---
 
 ## OpenKruise Rollout Annotations

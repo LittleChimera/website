@@ -19,6 +19,8 @@ Everything above this layer is identical. Gates, health checks, bake time, rollb
 
 Your manifests live in git. Kuberik selects a version and writes it into the Kustomization's substitution variables; Flux renders the overlay and applies it.
 
+![An image-tag rollout: the build Kuberik wrote into the Kustomization, the Flux resources it renders, and the checks that gate the next one](/screenshots/dashboard/overview-prod.png)
+
 ```yaml {filename="kustomization.yaml"}
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
@@ -50,6 +52,8 @@ Declare one annotation per substitution variable. A frontend and a backend manag
 ## Rendered Manifests
 
 Your CI renders the manifests for an environment (`kustomize build`, `helm template`, `cdk8s synth`, whatever you already run) and pushes the result as an OCI artifact to a path scoped to that environment. Kuberik owns the tag on the matching `OCIRepository`.
+
+![A rendered-manifests rollout: the artifact tag Kuberik set on the OCIRepository, with View Source to read exactly what was applied](/screenshots/dashboard/overview-manifests.png)
 
 ```yaml {filename="ocirepository.yaml"}
 apiVersion: source.toolkit.fluxcd.io/v1
