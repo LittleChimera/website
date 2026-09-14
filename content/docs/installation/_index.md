@@ -11,6 +11,18 @@ Install Kuberik in your Kubernetes cluster. The recommended path is the [Helm ch
 **Prerequisites:** You'll need a Kubernetes cluster and `kubectl` access. Kuberik requires a GitOps tool like FluxCD to function.
 {{< /callout >}}
 
+## All-in-one (kustomize)
+
+Pin-compatible bundle of the core controller plus optional integrations:
+
+```bash
+kubectl apply --server-side -k https://github.com/kuberik/kuberik/config/install
+```
+
+`--server-side` is required for the same CRD size reason as below. Prefer the [Helm chart](helm/) when you want one release to own upgrades.
+
+---
+
 ## Resource Reconciler
 
 Kuberik relies on a resource reconciler to apply manifests to your cluster.
@@ -38,8 +50,12 @@ Kuberik relies on a resource reconciler to apply manifests to your cluster.
 Deploy the rollout controller:
 
 ```bash
-kubectl apply --server-side -f https://github.com/kuberik/rollout-controller/releases/download/v0.7.0/install.yaml
+kubectl apply --server-side -f https://github.com/kuberik/rollout-controller/releases/download/{{< param "rollout_controller_version" >}}/install.yaml
 ```
+
+{{< callout type="info" >}}
+`--server-side` is required: the openkruise `RolloutTest` CRD (and some core CRDs) are larger than the annotation limit of client-side `kubectl apply`.
+{{< /callout >}}
 
 {{< callout type="default" >}}
 **Verify Installation:**
@@ -64,7 +80,7 @@ These controllers are **optional** and add specific functionality. Install only 
 Enables canary deployments and advanced traffic shifting.
 
 ```bash
-kubectl apply --server-side -f https://github.com/kuberik/openkruise-controller/releases/download/v0.3.3/install.yaml
+kubectl apply --server-side -f https://github.com/kuberik/openkruise-controller/releases/download/{{< param "openkruise_controller_version" >}}/install.yaml
 ```
 
 {{< badge content="Canary Deployments" >}} {{< badge content="Traffic Shifting" >}}
@@ -78,7 +94,7 @@ See [FluxCD Integration](/docs/integrations/fluxcd/) for image automation setup.
 Uses Datadog monitors as health check sources during rollouts.
 
 ```bash
-kubectl apply --server-side -f https://github.com/kuberik/datadog-controller/releases/download/v0.1.0/install.yaml
+kubectl apply --server-side -f https://github.com/kuberik/datadog-controller/releases/download/{{< param "datadog_controller_version" >}}/install.yaml
 ```
 
 {{< badge content="Health Checks" >}} {{< badge content="Monitoring" >}}
@@ -94,7 +110,7 @@ You'll need a Datadog API key configured. See [Datadog Integration](/docs/integr
 Coordinates multi-cluster promotions via GitHub Environments and Deployments APIs.
 
 ```bash
-kubectl apply --server-side -f https://github.com/kuberik/environment-controller/releases/download/v0.1.5/install.yaml
+kubectl apply --server-side -f https://github.com/kuberik/environment-controller/releases/download/{{< param "environment_controller_version" >}}/install.yaml
 ```
 
 {{< badge content="Multi-cluster" >}} {{< badge content="GitHub Integration" >}}
