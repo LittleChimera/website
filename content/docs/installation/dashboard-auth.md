@@ -75,6 +75,21 @@ spec:
             # every time. `--api-route` makes `/api/*` answer 401 instead:
             # no redirect, no cookie, and a status the frontend can act on.
             - --api-route=^/api/
+            # `--api-route` only covers the SPA's XHR. Its static bundle is
+            # fetched as SUBRESOURCES, and a browser will not follow a
+            # cross-origin redirect for a `<script type=module>`, a stylesheet
+            # or a `fetch` - it is CORS-blocked, so the module never arrives
+            # and the tab dies with "Failed to fetch dynamically imported
+            # module". Serving the bundle unauthenticated lets the shell boot
+            # and show the session-expired state the dashboard already renders
+            # from the 401s above. A 401 here would not do: it still fails to
+            # load the chunk.
+            #
+            # These are the dashboard's compiled, content-hashed frontend and
+            # its icons - no ids, secrets or tokens. All real data still comes
+            # over `/api/`, which stays gated.
+            - --skip-auth-route=^/_app/
+            - --skip-auth-route=^/(favicon\.(ico|png)|apple-touch-icon\.png|icon-(192|512)\.png|logo\.svg|manifest\.json)$
             - --cookie-secure=true
             - --cookie-samesite=lax
             - --reverse-proxy=true
@@ -136,6 +151,34 @@ spec:
 
 ## Troubleshooting
 
+### The dashboard loads for a while, then a page goes blank with IdP errors in the console
+
+Symptom: the dashboard works, then a navigation inside it renders nothing. The
+console shows failed requests to your IdP's `/authorize` endpoint and
+`Failed to fetch dynamically imported module` against
+`_app/immutable/chunks/*.js`. A hard reload fixes it, so it looks like a flaky
+deploy or a CDN problem. It is neither.
+
+A stale session makes extAuth `302` *every* unauthenticated request to the IdP.
+A browser navigation follows that and signs in, which is correct. A
+**subresource** cannot: the browser will not follow a cross-origin redirect for
+a `<script type=module>`, a stylesheet or a `fetch`, so it is CORS-blocked and
+the module never arrives.
+
+That is also why it is intermittent rather than constant. The dashboard
+code-splits per route, so a tab opened while the session was good already holds
+its shell and only breaks later, on the first lazy import after the session goes
+stale. Reloading works because a navigation *can* re-auth.
+
+The fix is the two `--skip-auth-route` lines in the manifest above. Note that
+`--api-route` is the wrong tool here - a `401` on a chunk still fails to load
+it, so the tab stays broken, just differently.
+
+Worth knowing even if you are not seeing blank pages: before this, every static
+asset request on a stale session also minted a CSRF cookie, so the bundle was
+feeding the header-bloat failure described next - and an SPA requests far more
+assets than API routes.
+
 ### The dashboard stops loading for one person, and clearing site data fixes it
 
 Symptom: one user's browser can't reach the dashboard host at all - Chrome
@@ -166,7 +209,11 @@ Fixes, in order of preference:
    altogether, so there are no concurrent flows to race and no CSRF cookies
    minted in the background. With it, `--cookie-csrf-per-request` is usually
    unnecessary.
-2. **If you still need `--cookie-csrf-per-request`**, always pair it with
+2. **Set the `--skip-auth-route` lines** (also in the manifest above). Static
+   assets are requested far more often than API routes, so on a stale session
+   they are usually the largest source of minted CSRF cookies - and gating them
+   breaks the page anyway (see the previous entry).
+3. **If you still need `--cookie-csrf-per-request`**, always pair it with
    `--cookie-csrf-per-request-limit=3`, which evicts the oldest CSRF cookies
    instead of letting them accumulate without bound.
 
