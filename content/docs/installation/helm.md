@@ -102,6 +102,9 @@ auth:
     namespace: envoy-gateway-system
 ```
 
+The chart defaults already set `auth.apiRoutes: ["^/api/"]` and `auth.staticRoutes` (`^/_app/` plus favicon/icon/manifest skip-auth) so stale sessions don't break polling or the static bundle. Leave them unless you have a reason to override — see [Dashboard Authentication](../dashboard-auth/) for why `apiRoutes` is the wrong tool for JS chunks.
+
+
 Configure kube-apiserver to trust the same client id so the id_token works as a Kubernetes credential (every dashboard action runs as the logged-in user, subject to RBAC):
 
 ```text {filename="kube-apiserver flags"}
