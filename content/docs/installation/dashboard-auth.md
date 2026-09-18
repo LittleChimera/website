@@ -75,6 +75,17 @@ spec:
             # every time. `--api-route` makes `/api/*` answer 401 instead:
             # no redirect, no cookie, and a status the frontend can act on.
             - --api-route=^/api/
+            # The same stale session also 302s the dashboard's *static* bundle
+            # to the IdP. Browser navigations follow that and sign in; module
+            # scripts / stylesheets / fetches cannot (cross-origin redirect is
+            # CORS-blocked), so the tab dies with "Failed to fetch dynamically
+            # imported module" against the IdP hostname. Putting these paths in
+            # `--api-route` is the wrong tool — a 401 still fails to load the
+            # chunk. `--skip-auth-route` serves the compiled, content-hashed
+            # frontend unauthenticated; real data stays behind `/api/` (401).
+            # Matches chart `auth.staticRoutes` defaults (kuberik/kuberik#17).
+            - --skip-auth-route=^/_app/
+            - --skip-auth-route=^/(favicon\.(ico|png)|apple-touch-icon\.png|icon-(192|512)\.png|logo\.svg|manifest\.json)$
             - --cookie-secure=true
             - --cookie-samesite=lax
             - --reverse-proxy=true
@@ -136,6 +147,22 @@ spec:
 
 ## Troubleshooting
 
+### Intermittent "Failed to fetch dynamically imported module" against the IdP host
+
+Symptom: the dashboard shell loads, then a navigation after the session goes
+stale fails with `Failed to fetch dynamically imported module` (or a CORS
+error) pointed at your IdP hostname — not the dashboard host. Tabs that
+already held the chunk keep working; a hard reload sometimes appears to fix
+it because a navigation can re-auth.
+
+Cause: extAuth is 302ing the code-split `/_app/` chunks (and icons/manifest)
+to the IdP. Subresources cannot follow that redirect. `--api-route` does not
+help here — a 401 still leaves the chunk unloaded.
+
+Fix: add the `--skip-auth-route` lines from the manifest above (chart value
+`auth.staticRoutes`). Navigations still 302 to the IdP; `/api/*` still 401s;
+the hashed frontend is served so the shell can show the session-expired state.
+
 ### The dashboard stops loading for one person, and clearing site data fixes it
 
 Symptom: one user's browser can't reach the dashboard host at all - Chrome
@@ -161,11 +188,12 @@ whose session went stale, that is hundreds of ~380 byte cookies in minutes.
 
 Fixes, in order of preference:
 
-1. **Set `--api-route=^/api/`** (in the manifest above). This is the root fix:
-   the dashboard's polling and streaming requests stop starting OIDC flows
-   altogether, so there are no concurrent flows to race and no CSRF cookies
-   minted in the background. With it, `--cookie-csrf-per-request` is usually
-   unnecessary.
+1. **Set `--api-route=^/api/`** (in the manifest above). This is the root fix
+   for background XHR/SSE: those requests stop starting OIDC flows, so there
+   are no concurrent flows to race and no CSRF cookies minted in the
+   background. With it, `--cookie-csrf-per-request` is usually unnecessary.
+   Keep the `--skip-auth-route` lines too — they are the matching fix for the
+   static bundle (see below).
 2. **If you still need `--cookie-csrf-per-request`**, always pair it with
    `--cookie-csrf-per-request-limit=3`, which evicts the oldest CSRF cookies
    instead of letting them accumulate without bound.
